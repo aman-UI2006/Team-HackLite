@@ -1,86 +1,116 @@
-.
-
 🎙️ MeetPulse — AI-Powered Live Meeting Intelligence System
 
 DevClash 2026 | Problem Statement 4
-Transforming meetings into structured intelligence — in real time.
+Turning conversations into real-time structured intelligence
 
+📌 Table of Contents
+Overview
+Features
+Tech Stack
+Architecture
+How It Works
+Quick Start
+Environment Variables
+Core Modules
+Unique Innovations
+Future Scope
+Contributing
+License
 🚀 Overview
 
-MeetPulse is a real-time AI meeting assistant that runs seamlessly alongside platforms like Google Meet, Zoom, and Microsoft Teams.
+MeetPulse is a next-generation AI meeting assistant that runs seamlessly alongside Google Meet, Zoom, and Microsoft Teams.
 
-It doesn’t just record meetings — it understands them.
+Unlike traditional tools that only record meetings, MeetPulse:
 
-From live transcription to action item extraction and cross-meeting insights, MeetPulse turns conversations into structured, actionable intelligence.
+Understands conversations in real-time
+Extracts actionable insights
+Tracks unresolved discussions across sessions
 
-✨ Key Features
-🎤 Real-Time Transcription
-Powered by Deepgram Nova-2
-Low-latency streaming transcription
+It acts like a live AI co-pilot for meetings — helping teams stay aligned, productive, and accountable.
+
+✨ Features
+🎤 Live Transcription
+Real-time speech-to-text using Deepgram Nova-2
 Speaker diarization (who said what)
-Live + finalized transcript updates
-🧠 AI-Powered Intelligence Extraction
-Built using Groq Llama3 models
-Auto-detects:
+Low-latency streaming via WebSockets
+🧠 AI Intelligence Extraction
+Powered by Groq Llama 3 models
+Automatically detects:
 ✅ Action Items
 📌 Decisions
 ❓ Open Questions
-Assignee + priority detection included
-📋 Live Meeting Summary
-Rolling summary updates every few sentences
-Keeps users aligned without rewatching conversations
-📸 Smart Screenshot Capture
-Detects meaningful visual changes:
+Assigns responsibility + priority
+📋 Live Summary Engine
+Rolling summary updated every few sentences
+Helps users stay focused without missing context
+📸 Smart Screenshot Detection
+Detects visual changes:
 Slides
 Diagrams
 Screen shares
-Auto-stores timestamped visuals
-🔁 Meeting Debt Tracking (🔥 Unique Feature)
-Identifies recurring unresolved topics
-Tracks them across multiple meetings
-Prevents "we’ll discuss later" loops
-📄 AI-Generated Debrief
-Generated at meeting end using Llama-3.1-70B
+Captures and stores with timestamps
+🔁 Meeting Debt Tracker (🚀 Core Innovation)
+Tracks unresolved topics across meetings
+Prevents repeated discussions without closure
+Builds long-term team memory
+📄 AI Meeting Debrief
+Generated at meeting end
 Includes:
 Summary
-Decisions
 Action items
-Open questions
+Decisions
+Questions
 Full transcript
-💾 Persistent Memory
-All data stored in MongoDB Atlas
+💾 Persistent Storage
+Stored in MongoDB Atlas
 Enables:
-Cross-session analysis
-Historical insights
-Long-term tracking
-🏗️ System Architecture
+Cross-meeting insights
+Historical tracking
+Data retrieval
+🛠️ Tech Stack
+Frontend (Extension)
+Chrome Extension (MV3)
+JavaScript (Vanilla)
+Sidebar UI (Google-style UX)
+Backend
+FastAPI (Python)
+WebSockets (real-time streaming)
+Async processing
+AI & Data
+Groq Llama 3 (8B + 70B)
+Deepgram Nova-2 (Speech-to-Text)
+MongoDB Atlas
+🏗️ Architecture
 Chrome Extension (MV3)
 ├── background.js      → Audio capture + message routing
-├── offscreen.js       → getUserMedia + Deepgram WebSocket
-├── content.js         → Sidebar UI injection + screenshot detection
-├── sidebar.html/js    → Real-time intelligence dashboard
-└── popup.html/js      → Control panel
+├── offscreen.js       → Microphone + Deepgram streaming
+├── content.js         → Sidebar injection + screenshot detection
+├── sidebar.html/js    → Live UI dashboard
+└── popup.html/js      → Control interface
 
 FastAPI Backend
-├── main.py            → WebSocket + AI orchestration
-├── ai/groq_client.py  → LLM interaction layer
-├── ai/prompts.py      → Structured extraction prompts
-├── db/mongo.py        → Async MongoDB client (Motor)
+├── main.py            → WebSocket handler + orchestration
+├── ai/
+│   ├── groq_client.py → AI inference
+│   └── prompts.py     → Structured prompts
+├── db/mongo.py        → MongoDB client
 ├── routes/
-│   ├── meetings.py    → Meeting lifecycle APIs
+│   ├── meetings.py    → Meeting APIs
 │   ├── debrief.py     → Debrief generation
 │   └── debt_log.py    → Cross-session tracking
 └── models.py          → Data schemas
-⚙️ Tech Stack
-Layer	Technology
-Frontend	Chrome Extension (MV3), Vanilla JS
-Backend	FastAPI, Python
-AI / NLP	Groq Llama3 (8B + 70B)
-Speech-to-Text	Deepgram Nova-2
-Database	MongoDB Atlas
-Streaming	WebSockets
-Async Engine	Motor
-🛠️ Getting Started
+⚙️ How It Works
+🎙️ User joins a meeting (Meet / Zoom / Teams)
+🔊 Audio is captured via Chrome Extension
+📡 Stream sent to Deepgram for transcription
+🧠 AI processes transcript using Groq
+📊 Sidebar displays:
+Live transcript
+Action items
+Summary
+📸 Screenshots captured on visual change
+📄 Final debrief generated after meeting
+🚀 Quick Start
 1️⃣ Start Backend
 cd backend
 python -m venv venv
@@ -88,61 +118,79 @@ source venv/bin/activate   # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 python main.py
 
-Backend runs on:
+Backend:
 
 http://localhost:8000
 
 Docs:
 
 http://localhost:8000/docs
-2️⃣ Load Chrome Extension
+2️⃣ Load Extension
 Open chrome://extensions
 Enable Developer Mode
 Click Load Unpacked
 Select /extension folder
 3️⃣ Use in Meeting
-Join meeting (Meet / Zoom / Teams)
+Join meeting
 Click MeetPulse extension
-Hit ▶ Start AI Capture
-Watch real-time intelligence in sidebar
+Press Start AI Capture
+View real-time insights
 🔐 Environment Variables
 
-Create a .env file in /backend:
+Create .env in backend:
 
-GROQ_API_KEY=your_key_here
-DEEPGRAM_API_KEY=your_key_here
+GROQ_API_KEY=your_key
+DEEPGRAM_API_KEY=your_key
 MONGO_URI=your_mongodb_uri
-📊 Core Modules Breakdown
+🧩 Core Modules
 🔹 Transcription Engine
-WebSocket streaming → Deepgram
-Real-time partial + final transcript handling
+Real-time streaming via WebSockets
+Partial + final transcript handling
 🔹 AI Processing Layer
 Prompt-engineered extraction
 Structured JSON outputs
-Event-driven updates
-🔹 Meeting Intelligence Engine
-Action item detection
+🔹 Intelligence Engine
+Action detection
 Topic clustering
-Cross-session linking
+Meeting memory system
 🔹 UI System
 Sidebar dashboard
-Live updates without refresh
-Clean, Google-style UX
-💡 What Makes MeetPulse Different?
+Live updates
+Minimal, clean UX
+💡 Unique Innovations
+🔁 Meeting Debt Tracking (rare feature)
+⚡ Real-time AI processing (not post-meeting)
+🧠 Context-aware extraction (not keyword-based)
+📊 Structured intelligence instead of raw notes
+🚧 Future Scope
+🔗 Integration with Notion / Jira
+📊 Meeting analytics dashboard
+🌍 Multilingual support
+👥 Team collaboration insights
+🤖 Fine-tuned enterprise AI models
+🤝 Contributing
 
-Most tools:
+We welcome contributions!
 
-Record meetings
-Maybe summarize after
+fork → clone → branch → commit → PR 🚀
+📜 License
 
-MeetPulse:
+MIT License
 
-Understands meetings live
-Tracks unresolved discussions across sessions
-Acts like an AI Project Manager in real-time
-🚧 Future Improvements
-🔗 Integration with Jira / Notion / Linear
-👥 Team dashboards
-📊 Meeting analytics (engagement, speaking time)
-🧠 Fine-tuned models for enterprise workflows
-🔊 Multilingual transcription + translation
+🧠 Vision
+
+Meetings shouldn’t be forgotten conversations.
+They should become structured intelligence that drives execution.
+
+⭐ Support
+
+If you find this project useful:
+
+⭐ Star the repo
+🍴 Fork it
+🧠 Contribute
+👨‍💻 Built For
+Hackathons (DevClash 2026)
+Productivity tools
+AI-powered SaaS products
+Real-world enterprise workflows
